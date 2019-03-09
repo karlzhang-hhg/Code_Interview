@@ -1,0 +1,15 @@
+BEGIN
+  LOOP 3
+    LOOP 3
+      PRINT Moe
+      LOOP 2
+        PRINT 3456
+        PRINT jjjj
+      END
+      PRINT adc
+    END
+  END
+  PRINT 12
+END
+
+//3*3*(3+2*(4+4)+3)+2=200

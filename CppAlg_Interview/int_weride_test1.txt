@@ -1,0 +1,9 @@
+BEGIN
+  LOOP 3
+    LOOP 3
+      PRINT Moe
+    END
+  END
+END
+
+//27

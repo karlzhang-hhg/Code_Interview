@@ -1,0 +1,14 @@
+BEGIN
+  LOOP 3
+    LOOP 3
+      PRINT Moe
+      LOOP 4
+        PRINT 3456
+        PRINT jjjj
+      END
+      PRINT adc
+    END
+  END
+END
+
+//3*3*(3+4*(4+4)+3)=342
