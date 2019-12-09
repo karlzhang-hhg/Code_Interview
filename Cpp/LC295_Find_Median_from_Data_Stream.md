@@ -104,3 +104,84 @@ public:
  * double param_2 = obj->findMedian();
  */
 ```
+
+
+# Method 3:
+I use two `multiset` to find median of expanding windows. This is slow, but code is simple.
+
+|Speed|Memory|
+|-|-|
+|51%|9%|
+
+```c++ {.line-numbers}
+class MedianFinder {
+    multiset<int> lo, hi;
+public:
+    /** initialize your data structure here. */
+    MedianFinder() {
+        
+    }
+    
+    void addNum(int num) {    
+        if (lo.size()==0 || num <= *lo.rbegin()) lo.insert(num);
+        else hi.insert(num);
+        
+        while (lo.size()<hi.size()) {
+            lo.insert(*hi.begin());
+            hi.erase(hi.begin());
+        }
+        
+        while (hi.size()<lo.size()-1) {
+            hi.insert(*lo.rbegin());
+            lo.erase(prev(lo.end())); // Cannot erase reverse iterator.
+        }
+    }
+    
+    double findMedian() {
+        return lo.size() > hi.size() ? (double)(*lo.rbegin()) : (*lo.rbegin()+*hi.begin())*0.5;
+    }
+};
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * MedianFinder* obj = new MedianFinder();
+ * obj->addNum(num);
+ * double param_2 = obj->findMedian();
+ */
+```
+
+This is slower, but code is simpler.
+
+```c++ {.line-numbers}
+class MedianFinder {
+    multiset<int> lo, hi;
+public:
+    /** initialize your data structure here. */
+    MedianFinder() {
+        
+    }
+    
+    void addNum(int num) {    
+        lo.insert(num);
+        
+        hi.insert(*lo.rbegin());
+        lo.erase(prev(lo.end()));
+        
+        if (lo.size()<hi.size()) {
+            lo.insert(*hi.begin());
+            hi.erase(hi.begin());
+        }
+    }
+    
+    double findMedian() {
+        return lo.size() > hi.size() ? (double)(*lo.rbegin()) : (*lo.rbegin()+*hi.begin())*0.5;
+    }
+};
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * MedianFinder* obj = new MedianFinder();
+ * obj->addNum(num);
+ * double param_2 = obj->findMedian();
+ */
+```
